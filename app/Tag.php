@@ -24,6 +24,14 @@ class Tag extends Model
 
     public function posts()
     {
-        return $this->belongsToMany(Post::class);
+        return $this->belongsToMany(Post::class)->latest();
+    }
+
+    public function saveManyFromString($str)
+    {
+        return array_map(function ($item) {
+            $name = trim($item);
+            return $this->firstOrCreate(['name' => $name]);
+        }, explode(',', $str));
     }
 }

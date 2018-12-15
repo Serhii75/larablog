@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\{Post};
+use App\Http\Requests\Api\Post\{
+    StorePostRequest,
+    UpdatePostRequest
+};
 use App\Http\Resources\{
     Post as PostResource,
     PostCollection
@@ -19,71 +23,75 @@ class PostController extends Controller
      */
     public function index()
     {
-        return new PostCollection(Post::with('tags')->paginate());
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new PostCollection(Post::with('tags')->paginate(32));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Api\Post\StorePostRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        //
+        $post = Post::create(array_merge(
+            $request->only('category_id', 'title', 'image', 'body'),
+            ['user_id' => $request->user()->id]
+        ));
+
+        if ($request->tags) {
+            $tags = Tag::saveManyFromString($request->tags);
+            $post->tags()->attach($tags->pluck('id')->toArray());
+        }
+
+        $post->load('category', 'tags', 'user');
+
+        return new PostResource($post);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        return new PostResource(Post::with('category', 'tags')->findOrFail($id));
-    }
+        $post->load('category', 'tags', 'user');
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return new PostResource($post);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\Api\Post\UpdatePostRequest  $request
+     * @param  \App\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $this->authorize('update', $post);
+
+        $post->update($request->only('category_id', 'title', 'image', 'body'));
+
+        if ($request->tags) {
+            $tags = Tag::saveManyFromString($request->tags);
+            $post->tags()->sync($tags->pluck('id')->toArray());
+        }
+
+        $post->load('category', 'tags', 'user');
+
+        return new PostResource($post);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
         //
     }

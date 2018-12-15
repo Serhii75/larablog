@@ -18,9 +18,38 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['namespace' => 'Api'], function () {
-    Route::resources([
-        'categories' => 'CategoryController',
-        'posts' => 'PostController',
-        'tags' => 'TagController',
-    ]);
+    Route::post('/register', 'Auth\RegisterController@register');
+
+    Route::prefix('categories')->group(function () {
+        Route::get('/', 'CategoryController@index');
+        Route::get('/{category}', 'CategoryController@show');
+
+        Route::group(['middleware' => 'auth:api'], function () {
+            Route::post('/', 'CategoryController@store');
+            Route::patch('/{category}', 'CategoryController@update');
+            Route::delete('/{category}', 'CategoryController@destroy');
+        });
+    });
+
+    Route::prefix('posts')->group(function () {
+        Route::get('/', 'PostController@index');
+        Route::get('/{post}', 'PostController@show');
+
+        Route::group(['middleware' => 'auth:api'], function () {
+            Route::post('/', 'PostController@store');
+            Route::patch('/{post}', 'PostController@update');
+            Route::delete('/{post}', 'PostController@destroy');
+        });
+    });
+
+    Route::prefix('tags')->group(function () {
+        Route::get('/', 'TagController@index');
+        Route::get('/{tag}', 'TagController@show');
+
+        Route::group(['middleware' => 'auth:api'], function () {
+            Route::post('/', 'TagController@store');
+            Route::patch('/{tag}', 'TagController@update');
+            Route::delete('/{tag}', 'TagController@destroy');
+        });
+    });
 });
