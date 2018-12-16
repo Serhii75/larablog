@@ -15,8 +15,18 @@ class Role extends Model
         'name',
     ];
 
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
     public $timestamps = false;
 
+    /**
+     * Get the users for the role
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function users()
     {
         return $this->hasMany(User::class);

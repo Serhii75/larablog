@@ -15,6 +15,11 @@ class Category extends Model
         'name', 'slug', 'description', 'live',
     ];
 
+    /**
+     * Get the posts for the category
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function posts()
     {
         return $this->hasMany(Post::class)->latest();

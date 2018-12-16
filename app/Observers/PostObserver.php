@@ -7,12 +7,12 @@ use App\Post;
 class PostObserver
 {
     /**
-     * Handle the post "saving" event.
+     * Handle the post "creating" event.
      *
      * @param  \App\Post  $post
      * @return void
      */
-    public function saving(Post $post)
+    public function creating(Post $post)
     {
         $post->slug = str_slug($post->title) . '-' . date_timestamp_get(date_create());
         $post->live = request()->live ? true : false;

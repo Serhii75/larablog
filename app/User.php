@@ -29,21 +29,42 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * Get the role for the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function role()
     {
         return $this->belongsTo(Role::class);
     }
 
+    /**
+     * Get the user posts
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function posts()
     {
         return $this->hasMany(Post::class);
     }
 
+    /**
+     * Determine if the user is an admin
+     *
+     * @return boolean
+     */
     public function isAdmin()
     {
         return $this->role->name === 'admin';
     }
 
+    /**
+     * Determine if the user owns the post
+     *
+     * @param  Post   $post [description]
+     * @return boolean
+     */
     public function ownsPost(Post $post)
     {
         return $this->id === $post->user->id;

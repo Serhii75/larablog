@@ -23,20 +23,56 @@ class Post extends Model
         'live',
     ];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
     protected $dates = ['deleted_at'];
 
+    /**
+     * Get the user that owns the post.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get the category for the post
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
+    /**
+     * The tags that belong to the post
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    /**
+     * Save tags from string and syncronize them with the post
+     *
+     * @param  string $str [tags separated by commas]
+     * @return void
+     */
+    public function saveTagsFromString($str)
+    {
+        $tags = collect(explode(',', $str))->map(function ($item) {
+            $name = trim($item);
+            return Tag::firstOrCreate(['name' => $name]);
+        });
+
+        $this->tags()->sync($tags->pluck('id')->toArray());
     }
 }

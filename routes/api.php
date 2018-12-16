@@ -37,8 +37,10 @@ Route::group(['namespace' => 'Api'], function () {
 
         Route::group(['middleware' => 'auth:api'], function () {
             Route::post('/', 'PostController@store');
+            Route::post('/{post}/restore', 'PostController@restore');
             Route::patch('/{post}', 'PostController@update');
             Route::delete('/{post}', 'PostController@destroy');
+            Route::delete('/{post}/delete', 'PostController@forceDelete');
         });
     });
 

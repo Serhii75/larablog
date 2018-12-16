@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Category;
 use App\Http\Requests\Api\Category\StoreCategoryRequest;
 use App\Http\Resources\Category as CategoryResource;
+use App\Http\Resources\User as UserResource;
 use App\Http\Resources\CategoryCollection;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -29,6 +30,8 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
+        $this->authorize('create', Category::class);
+
         $category = Category::create($request->only('name', 'description'));
 
         return new CategoryResource($category);
@@ -56,7 +59,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $this->authorize('update', $category);
+
+        $category->update($request->only('name', 'description'));
+
+        return new CategoryResource($category);
     }
 
     /**
@@ -67,6 +74,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $this->authorize('delete', $category);
+
+        $category->delete();
+
+        return response(null, 204);
     }
 }

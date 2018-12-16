@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\{Post};
+use App\{Post, Tag};
 use App\Http\Requests\Api\Post\{
     StorePostRequest,
     UpdatePostRequest
@@ -34,14 +34,12 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        $post = Post::create(array_merge(
-            $request->only('category_id', 'title', 'image', 'body'),
-            ['user_id' => $request->user()->id]
-        ));
+        $post = $request->user()->posts()->create(
+            $request->only('category_id', 'title', 'image', 'body')
+        );
 
         if ($request->tags) {
-            $tags = Tag::saveManyFromString($request->tags);
-            $post->tags()->attach($tags->pluck('id')->toArray());
+            $post->saveTagsFromString($request->tags);
         }
 
         $post->load('category', 'tags', 'user');
@@ -76,8 +74,7 @@ class PostController extends Controller
         $post->update($request->only('category_id', 'title', 'image', 'body'));
 
         if ($request->tags) {
-            $tags = Tag::saveManyFromString($request->tags);
-            $post->tags()->sync($tags->pluck('id')->toArray());
+            $post->saveTagsFromString($request->tags);
         }
 
         $post->load('category', 'tags', 'user');
@@ -93,6 +90,44 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $this->authorize('delete', $post);
+
+        $post->delete();
+
+        return response(null, 204);
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  integer $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        $post = Post::withTrashed()->find($id);
+
+        $this->authorize('restore', $post);
+
+        $post->restore();
+        $post->load('category', 'tags', 'user');
+
+        return new PostResource($post);
+    }
+
+    /**
+     * Hard delete the specified resource from storage.
+     *
+     * @param  \App\Post $post
+     * @return \Illuminate\Http\Response
+     */
+    public function forceDelete(Post $post)
+    {
+        $this->authorize('delete', $post);
+
+        $post->tags()->sync([]);
+        $post->forceDelete();
+
+        return response(null, 204);
     }
 }

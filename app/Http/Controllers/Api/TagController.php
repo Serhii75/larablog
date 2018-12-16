@@ -57,7 +57,11 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        //
+        $this->authorize('update', $tag);
+
+        $tag->update($request->only('name'));
+
+        return new TagResource($tag);
     }
 
     /**
@@ -68,6 +72,10 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $this->authorize('delete', $tag);
+
+        $tag->delete();
+
+        return response(null, 204);
     }
 }
