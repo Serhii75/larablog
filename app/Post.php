@@ -61,6 +61,16 @@ class Post extends Model
     }
 
     /**
+     * The comments that belong to the post
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
      * Save tags from string and syncronize them with the post
      *
      * @param  string $str [tags separated by commas]
