@@ -23,7 +23,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return new PostCollection(Post::with('tags')->paginate(32));
+        return new PostCollection(Post::with('tags')->paginate(24));
     }
 
     /**

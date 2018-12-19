@@ -17,12 +17,12 @@ class CommentsTableSeeder extends Seeder
             $comments = $post->comments()->saveMany(factory(Comment::class, 3)->make());
 
             $comments->each(function ($comment) use ($post) {
-                $comment->replies()->saveMany($this->createComments($comment, $post, 3));
+                $comment->replies()->saveMany($this->createComments($post, 3));
             });
         });
     }
 
-    protected function createComments($comment, $post, $depth = 2, $currentDepth = 0)
+    protected function createComments($post, $depth = 2, $currentDepth = 0)
     {
         if ($currentDepth == $depth) {
             return [];
@@ -31,7 +31,7 @@ class CommentsTableSeeder extends Seeder
         $comments = $post->comments()->saveMany(factory(Comment::class, 3)->make());
 
         $comments->each(function ($reply) use ($post, $depth, $currentDepth) {
-            $reply->replies()->saveMany($this->createComments($reply, $post, $depth, ++$currentDepth));
+            $reply->replies()->saveMany($this->createComments($post, $depth, ++$currentDepth));
         });
 
         return $comments;

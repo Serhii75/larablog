@@ -34,6 +34,7 @@ Route::group(['namespace' => 'Api'], function () {
     Route::prefix('posts')->group(function () {
         Route::get('/', 'PostController@index');
         Route::get('/{post}', 'PostController@show');
+        Route::get('/{post}/comments', 'PostCommentController@index');
 
         Route::group(['middleware' => 'auth:api'], function () {
             Route::post('/', 'PostController@store');
@@ -41,6 +42,10 @@ Route::group(['namespace' => 'Api'], function () {
             Route::patch('/{post}', 'PostController@update');
             Route::delete('/{post}', 'PostController@destroy');
             Route::delete('/{post}/delete', 'PostController@forceDelete');
+
+            Route::post('/{post}/comments', 'PostCommentController@store');
+            Route::patch('/{post}/comments/{comment}', 'PostCommentController@update');
+            Route::delete('/{post}/comments/{comment}', 'PostCommentController@destroy');
         });
     });
 

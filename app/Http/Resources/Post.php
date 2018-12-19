@@ -20,7 +20,7 @@ class Post extends JsonResource
     {
         return [
             'id' => $this->id,
-            'author' => new UserResource($this->user),
+            'user' => new UserResource($this->user),
             'category' => new CategoryResource($this->whenLoaded('category')),
             'title' => $this->title,
             'slug' => $this->slug,

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Post as PostResource;
 
 class Category extends JsonResource
 {
@@ -23,6 +24,7 @@ class Category extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'posts' => new PostCollection($this->whenLoaded('posts')),
+            // 'posts' => PostResource::collection($this->posts)->paginate(24),
         ];
     }
 }
