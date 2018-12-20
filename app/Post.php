@@ -51,7 +51,7 @@ class Post extends Model
     }
 
     /**
-     * The tags that belong to the post
+     * Get the post tags
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -61,7 +61,7 @@ class Post extends Model
     }
 
     /**
-     * The comments that belong to the post
+     * The the post comments
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

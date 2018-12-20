@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Category;
-use App\Http\Requests\Api\Category\StoreCategoryRequest;
+use App\Http\Requests\Api\Category\{
+    StoreCategoryRequest,
+    UpdateCategoryRequest
+};
 use App\Http\Resources\Category as CategoryResource;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\CategoryCollection;

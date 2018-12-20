@@ -23,6 +23,7 @@ Route::group(['namespace' => 'Api'], function () {
     Route::prefix('categories')->group(function () {
         Route::get('/', 'CategoryController@index');
         Route::get('/{category}', 'CategoryController@show');
+        Route::get('/{category}/posts', 'CategoryPostController@index');
 
         Route::group(['middleware' => 'auth:api'], function () {
             Route::post('/', 'CategoryController@store');
@@ -52,11 +53,24 @@ Route::group(['namespace' => 'Api'], function () {
     Route::prefix('tags')->group(function () {
         Route::get('/', 'TagController@index');
         Route::get('/{tag}', 'TagController@show');
+        Route::get('/{tag}/posts', 'TagPostController@index');
 
         Route::group(['middleware' => 'auth:api'], function () {
             Route::post('/', 'TagController@store');
             Route::patch('/{tag}', 'TagController@update');
             Route::delete('/{tag}', 'TagController@destroy');
+        });
+    });
+
+    Route::prefix('users')->group(function () {
+        Route::get('/', 'UserController@index');
+        Route::get('/{user}', 'UserController@show');
+        Route::get('/{user}/posts', 'UserController@posts');
+        Route::get('/{user}/comments', 'UserController@comments');
+
+        Route::group(['middleware' => 'auth:api'], function () {
+            Route::patch('/{user}', 'UserController@update');
+            Route::delete('/{user}', 'UserController@destroy');
         });
     });
 });

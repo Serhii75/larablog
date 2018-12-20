@@ -30,7 +30,7 @@ class PostCommentController extends Controller
 
         $nested = $this->buildTree($comments);
 
-        return new CommentCollection($nested->paginate(2));
+        return new CommentCollection($nested->paginate(config('larablog.per_page.comments')));
     }
 
     /**
@@ -52,8 +52,9 @@ class PostCommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\Api\Comment\UpdateCommentRequest
+     * @param  Post $post
+     * @param  Comment $comment
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateCommentRequest $request, Post $post, Comment $comment)
@@ -68,7 +69,8 @@ class PostCommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Post  $post
+     * @param  Comment  $comment
      * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post, Comment $comment)

@@ -50,6 +50,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the user comments
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
      * Determine if the user is an admin
      *
      * @return boolean

@@ -9,6 +9,10 @@ use App\Http\Resources\{
     Tag as TagResource,
     TagCollection
 };
+use App\Http\Requests\Api\Tag\{
+    StoreTagRequest,
+    UpdateTagRequest
+};
 
 class TagController extends Controller
 {
@@ -25,10 +29,10 @@ class TagController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Api\Tag\StoreTagRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTagRequest $request)
     {
         $tag = Tag::create($request->only('name'));
 
@@ -51,11 +55,11 @@ class TagController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\Api\Tag\UpdateTagRequest  $request
+     * @param  Tag $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
+    public function update(UpdateTagRequest $request, Tag $tag)
     {
         $this->authorize('update', $tag);
 
