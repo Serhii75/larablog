@@ -55,6 +55,17 @@ class UserController extends Controller
     }
 
     /**
+     * Get the current user
+     *
+     * @param  \Illuminate\Http\Request $request [description]
+     * @return \Illuminate\Http\Response
+     */
+    public function me(Request $request)
+    {
+        return new UserResource($request->user());
+    }
+
+    /**
      * Display a listing of the user posts.
      *
      * @param  \App\User $user

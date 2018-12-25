@@ -16,5 +16,9 @@ class RegisterController extends Controller
             ['password' => bcrypt($request->password)],
             ['role_id' => 2]
         ));
+
+        return response()->json([
+            'message' => 'You were successfully registered. Use your email and password to sign in.'
+        ], 200);
     }
 }
