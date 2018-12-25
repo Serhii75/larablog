@@ -1,8 +1,16 @@
-# Introduction
-Backend APi for Blog System
+## Introduction
+Backend API for Blog System
 
-# Overview
-This is a Blog System Backend based on Laravel 5.7. You can use it, for example, for your Blog SPA. Full source code may be found here: https://github.com/Serhii75/larablog. A registered user can create/update/delete his own blog posts and comments, and create tags. In addition, an admin can do everything as a registered user, plus create/read/update/delete categories and tags, update and delete all the posts and comments. You can find more info by looking at requests descriptions.
+## Overview
+This is a Blog System Backend API based on Laravel 5.7. You can use it, for example, for your Blog SPA. The endpoints docs may be found [here](https://documenter.getpostman.com/view/3253057/Rzn9rfdq)
 
-# Authentication
-The app using Laravel/Passport
+## Installation
+1. Clone the project
+2. Enter the project directory and execute:
+`composer install`
+3. Create the .env file and set params to connect to your database
+4. Execute `php artisan key:generate`
+5. Execute `php artisan migrate`
+6. If you want to seed your db with dummy data, execute `php artisan db:seed`
+7. Execute `php artisan passport:install`
+8. Enjoy it!
