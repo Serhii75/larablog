@@ -7,6 +7,7 @@ use App\Http\Resources\{
     Category as CategoryResource,
     User as UserResource
 };
+use Carbon\Carbon;
 
 class Post extends JsonResource
 {
@@ -27,8 +28,8 @@ class Post extends JsonResource
             'image' => $this->image,
             'body' => $this->body,
             'tags' => new TagCollection($this->whenLoaded('tags')),
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
+            'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
         ];
     }
 }

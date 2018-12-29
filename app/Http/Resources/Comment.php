@@ -25,8 +25,8 @@ class Comment extends JsonResource
             'parent_id' => $this->parent_id,
             'body' => $this->body,
             'children' => $this->children,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
+            'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
         ];
     }
 }

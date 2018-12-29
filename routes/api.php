@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 Route::group(['namespace' => 'Api'], function () {
     Route::post('/register', 'Auth\RegisterController@register');
     Route::post('/login', 'Auth\LoginController@login');
+    Route::get('/logout', 'Auth\LogoutController')->middleware('auth:api');
     Route::get('/me', 'UserController@me')->middleware('auth:api');
 
     Route::prefix('categories')->group(function () {
