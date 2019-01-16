@@ -6,4 +6,8 @@ return [
         'posts' => 24,
         'users' => 24,
     ],
+
+    'posts' => [
+        'intro_length' => 150,
+    ],
 ];

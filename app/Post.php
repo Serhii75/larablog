@@ -71,6 +71,16 @@ class Post extends Model
     }
 
     /**
+     * Get all of the post's likes
+     *
+     * @return [type] [description]
+     */
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
+
+    /**
      * Save tags from string and syncronize them with the post
      *
      * @param  string $str [tags separated by commas]
@@ -84,5 +94,13 @@ class Post extends Model
         });
 
         $this->tags()->sync($tags->pluck('id')->toArray());
+    }
+
+    public function getIntroAttribute()
+    {
+        $filtered = strip_tags($this->body);
+        $length = config('larablog.posts.intro_length');
+
+        return mb_strlen($filtered) > $length ? mb_substr($filtered, 0, $length) . '...' : $filtered;
     }
 }

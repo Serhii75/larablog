@@ -25,7 +25,7 @@ class Category extends JsonResource
             'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
             'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
             'posts' => new PostCollection($this->whenLoaded('posts')),
-            // 'posts' => PostResource::collection($this->posts)->paginate(24),
+            // 'posts' => PostResource::collection($this->posts->paginate(config('larablog.per_page.posts')))->hide(['body']),
         ];
     }
 }

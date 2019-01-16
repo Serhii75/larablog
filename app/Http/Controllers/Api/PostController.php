@@ -23,8 +23,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        return new PostCollection(Post::with('tags')
-            ->paginate(config('larablog.per_page.posts')));
+        $posts = Post::with('tags')
+            ->paginate(config('larablog.per_page.posts'));
+
+        return new PostCollection($posts);
     }
 
     /**
@@ -58,7 +60,7 @@ class PostController extends Controller
     {
         $post->load('category', 'tags', 'user');
 
-        return new PostResource($post);
+        return (new PostResource($post));
     }
 
     /**

@@ -14,10 +14,10 @@ class CommentsTableSeeder extends Seeder
     {
 
         Post::get()->each(function (Post $post) {
-            $comments = $post->comments()->saveMany(factory(Comment::class, 3)->make());
+            $comments = $post->comments()->saveMany(factory(Comment::class, 2)->make());
 
             $comments->each(function ($comment) use ($post) {
-                $comment->replies()->saveMany($this->createComments($post, 3));
+                $comment->replies()->saveMany($this->createComments($post, 2));
             });
         });
     }
