@@ -22,7 +22,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return new CategoryCollection(Category::get());
+        $categories = Category::get();
+
+        return (new CategoryCollection($categories))->filtrate('except', ['posts']);
     }
 
     /**
@@ -50,7 +52,7 @@ class CategoryController extends Controller
     {
         $category->load('posts.tags');
 
-        return new CategoryResource($category);
+        return (new CategoryResource($category))->filtrate('except', ['posts']);
     }
 
     /**

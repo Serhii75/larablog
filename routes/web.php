@@ -1,5 +1,8 @@
 <?php
 
+use App\category;
+use App\Http\Resources\Category as CategoryResource;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,5 +15,11 @@
 */
 
 Route::get('/', function () {
+    $category = Category::find(3);
+
+    $result = (new CategoryResource($category))->filtrate('hide', ['posts', 'slug', 'updated_at']);
+
+    dump($result);
+
     return view('welcome');
 });
