@@ -2,10 +2,13 @@
 
 namespace App\Http\Resources;
 
+use App\Traits\Resources\Filtratable;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class UserCollection extends ResourceCollection
 {
+    use Filtratable;
+
     /**
      * Transform the resource collection into an array.
      *
@@ -15,7 +18,7 @@ class UserCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => $this->collection
+            'data' => $this->processCollection($request),
         ];
     }
 }

@@ -2,23 +2,13 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\{
-    Category as CategoryResource,
-    User as UserResource
-};
+use App\Traits\Resources\Filtratable;
 use Carbon\Carbon;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class Post extends JsonResource
 {
-    /**
-     * Fields to filter
-     *
-     * @var array
-     */
-    protected $fieldsToFilter = [];
-
-    protected $filter;
+    use Filtratable;
 
     /**
      * Transform the resource into an array.
@@ -28,7 +18,7 @@ class Post extends JsonResource
      */
     public function toArray($request)
     {
-        return $this->filterFields([
+        return $this->filtrateFields([
             'id' => $this->id,
             'user' => new UserResource($this->user),
             'category' => new CategoryResource($this->whenLoaded('category')),
@@ -43,43 +33,5 @@ class Post extends JsonResource
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i'),
             'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d H:i'),
         ]);
-    }
-
-    public function only()
-    {
-
-
-        return $this;
-    }
-
-    /**
-     * Set the keys that are supposed to be filtered out.
-     *
-     * @param array $fields
-     * @return $this
-     */
-    public function hide($fields)
-    {
-        $this->withoutFields = $fields;
-
-        return $this;
-    }
-
-    /**
-     * Remove the filtered keys.
-     *
-     * @param $array
-     * @return array
-     */
-    protected function filterFields(array $array)
-    {
-        return collect($array)->forget($this->fieldsToFilter)->toArray();
-    }
-
-    public static function collection($resource)
-    {
-        return tap(new PostCollection($resource), function ($collection) {
-            $collection->collects = __CLASS__;
-        });
     }
 }

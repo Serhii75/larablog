@@ -21,7 +21,7 @@ class Comment extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => new UserResource($this->user),
-            'post_id' => new PostResource($this->whenLoaded('post')),
+            'post_id' => $this->post_id,
             'parent_id' => $this->parent_id,
             'body' => $this->body,
             'children' => $this->children,

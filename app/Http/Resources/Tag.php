@@ -18,7 +18,6 @@ class Tag extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'posts' => new PostCollection($this->whenLoaded('posts')),
         ];
     }
 }

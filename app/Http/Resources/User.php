@@ -2,10 +2,13 @@
 
 namespace App\Http\Resources;
 
+use App\Traits\Resources\Filtratable;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class User extends JsonResource
 {
+    use Filtratable;
+
     /**
      * Transform the resource into an array.
      *
@@ -14,11 +17,11 @@ class User extends JsonResource
      */
     public function toArray($request)
     {
-        return [
+        return $this->filtrateFields([
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
             'isAdmin' => $this->isAdmin(),
-        ];
+        ]);
     }
 }

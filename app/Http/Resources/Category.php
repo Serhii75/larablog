@@ -2,12 +2,15 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Post as PostResource;
+use App\Traits\Resources\Filtratable;
 use Carbon\Carbon;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class Category extends FiltratedResource
+class Category extends JsonResource
 {
+    use Filtratable;
+
     /**
      * Transform the resource into an array.
      *
@@ -24,8 +27,6 @@ class Category extends FiltratedResource
             'live' => $this->live,
             'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
             'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
-            // 'posts' => new PostCollection($this->whenLoaded('posts')),
-            'posts' => PostResource::collection($this->posts->paginate(config('larablog.per_page.posts')))->hide(['body']),
         ]);
     }
 }

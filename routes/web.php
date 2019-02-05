@@ -18,6 +18,7 @@ Route::get('/', function () {
     $category = Category::find(3);
 
     $result = (new CategoryResource($category))->filtrate('hide', ['posts', 'slug', 'updated_at']);
+    // $result = (new CategoryResource($category))->filtrate('only', ['id', 'name']);
 
     dump($result);
 
