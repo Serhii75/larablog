@@ -81,6 +81,17 @@ class Post extends Model
     }
 
     /**
+     * Scope a query to include post preview data
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePreviews($query)
+    {
+        return $query->with('tags', 'user.role')->withCount('comments')->withCount('likes');
+    }
+
+    /**
      * Save tags from string and syncronize them with the post
      *
      * @param  string $str [tags separated by commas]

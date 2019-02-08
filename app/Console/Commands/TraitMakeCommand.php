@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputArgument;
 
-class MakeTraitCommand extends GeneratorCommand
+class TraitMakeCommand extends GeneratorCommand
 {
     /**
      * The name and signature of the console command.

@@ -23,10 +23,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('tags', 'user')
+        $posts = Post::previews()
             ->paginate(config('larablog.per_page.posts'));
 
-        return new PostCollection($posts);
+        return (new PostCollection($posts))->except('body');
     }
 
     /**

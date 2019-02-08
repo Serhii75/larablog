@@ -80,6 +80,10 @@ trait Filtratable
      */
     protected function processCollection($request)
     {
+        if (! $this->filtrateMethod) {
+            return $this->collection;
+        }
+
         return $this->collection->map(function ($resource) use ($request) {
             $method = $this->filtrateMethod;
             return $resource->$method($this->fieldsToFiltrate)->toArray($request);

@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputArgument;
 
-class MakeContractCommand extends GeneratorCommand
+class ContractMakeCommand extends GeneratorCommand
 {
     /**
      * The name and signature of the console command.
