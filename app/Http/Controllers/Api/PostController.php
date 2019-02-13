@@ -72,7 +72,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        $this->authorize('update', $post);
+        // $this->authorize('update', $post);
 
         $post->update($request->only('category_id', 'title', 'image', 'body'));
 

@@ -50,6 +50,8 @@ Route::group(['namespace' => 'Api'], function () {
             Route::post('/{post}/comments', 'PostCommentController@store');
             Route::patch('/{post}/comments/{comment}', 'PostCommentController@update');
             Route::delete('/{post}/comments/{comment}', 'PostCommentController@destroy');
+
+            Route::post('/{post}/likes', 'PostLikeController@store');
         });
     });
 

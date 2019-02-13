@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Notifications\PostPublished;
 use App\Post;
 
 class PostObserver
@@ -29,5 +30,9 @@ class PostObserver
         $temp = explode('-', $post->slug);
         $post->slug = str_slug($post->title) . '-' . array_pop($temp);
         $post->live = request()->live ? true : false;
+
+        if (request()->live) {
+            $post->user->notify(new PostPublished($post));
+        }
     }
 }

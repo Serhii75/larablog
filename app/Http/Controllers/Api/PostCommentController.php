@@ -13,6 +13,7 @@ use App\Http\Requests\Api\Comment\{
     StoreCommentRequest,
     UpdateCommentRequest
 };
+use App\Notifications\PostCommented;
 use Illuminate\Http\Request;
 
 class PostCommentController extends Controller
@@ -45,6 +46,8 @@ class PostCommentController extends Controller
             $request->only('parent_id', 'body'),
             ['user_id' => $request->user()->id]
         ));
+
+        $post->user->notify(new PostCommented($post, $comment));
 
         return new CommentResource($comment);
     }
