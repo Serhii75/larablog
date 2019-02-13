@@ -47,7 +47,7 @@ class PostCommentController extends Controller
             ['user_id' => $request->user()->id]
         ));
 
-        $post->user->notify(new PostCommented($post, $comment));
+        // $post->user->notify(new PostCommented($post, $comment));
 
         return new CommentResource($comment);
     }
