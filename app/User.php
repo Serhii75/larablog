@@ -60,6 +60,28 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the user followers
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'follows_id', 'follower_id')
+            ->withTimestamps();
+    }
+
+    /**
+     * Get other users who's being followed by the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function follows()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'follows_id')
+            ->withTimestamps();
+    }
+
+    /**
      * Determine if the user is an admin
      *
      * @return boolean
@@ -89,5 +111,52 @@ class User extends Authenticatable
     public function ownsComment(Comment $comment)
     {
         return $this->id === $comment->user->id;
+    }
+
+    /**
+     * Start following the given user
+     *
+     * @param  \App\User $user
+     * @return \App\User
+     */
+    public function follow($user)
+    {
+        $this->follows()->attach($user->id);
+
+        return $this;
+    }
+
+    /**
+     * Stop following the given user
+     *
+     * @param  \App\user $user
+     * @return \App\User
+     */
+    public function unfollow($user)
+    {
+        $this->follows()->detach($user->id);
+
+        return $this;
+    }
+
+    /**
+     * Determine if the user is following other user
+     *
+     * @param  \App\User  $user
+     * @return boolean
+     */
+    public function isFollowing($user)
+    {
+        return $this->follows()->contains($user);
+    }
+
+    /**
+     * Determine if the user is followed by other user
+     * @param  \App\User  $user
+     * @return boolean
+     */
+    public function isFollowedBy($user)
+    {
+        return $this->followers()->contains($user);
     }
 }

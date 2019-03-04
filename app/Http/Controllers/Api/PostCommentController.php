@@ -23,7 +23,7 @@ class PostCommentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\CommentCollection
      */
     public function index(Post $post)
     {
@@ -38,7 +38,7 @@ class PostCommentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\Api\Comment\StoreCommentRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\Comment
      */
     public function store(StoreCommentRequest $request, Post $post)
     {
@@ -56,9 +56,9 @@ class PostCommentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\Api\Comment\UpdateCommentRequest
-     * @param  Post $post
-     * @param  Comment $comment
-     * @return \Illuminate\Http\Response
+     * @param  \App\Post $post
+     * @param  \App\Comment $comment
+     * @return \App\Http\Resources\Comment
      */
     public function update(UpdateCommentRequest $request, Post $post, Comment $comment)
     {

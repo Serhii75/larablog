@@ -16,8 +16,14 @@ class CategoryPostController extends Controller
      */
     public function index(Category $category)
     {
+        if ($category) {
+            dump('Something');
+        }
+
         $posts = $category->posts()->with([
-            'category', 'tags', 'user'
+            'category',
+            'tags',
+            'user'
         ])->latest()->paginate(config('larablog.per_page.posts'));
 
         return new PostCollection($posts);

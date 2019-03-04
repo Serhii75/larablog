@@ -11,6 +11,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        if (env('APP_ENV') === 'testing') {
+            $this->runTestSeeders();
+        } else {
+            $this->runDevelopmentSeeders();
+        }
+    }
+
+    protected function runDevelopmentSeeders()
+    {
         $this->call([
             RolesTableSeeder::class,
             UsersTableSeeder::class,
@@ -20,6 +29,15 @@ class DatabaseSeeder extends Seeder
             PostTagTableSeeder::class,
             CommentsTableSeeder::class,
             LikesTableSeeder::class,
+        ]);
+    }
+
+    protected function runTestSeeders()
+    {
+        $this->call([
+            RolesTableSeeder::class,
+            UsersTableSeeder::class,
+            CategoriesTableSeeder::class,
         ]);
     }
 }

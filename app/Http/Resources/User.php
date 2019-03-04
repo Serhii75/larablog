@@ -24,4 +24,3 @@ class User extends JsonResource
             'isAdmin' => $this->isAdmin(),
         ]);
     }
-}

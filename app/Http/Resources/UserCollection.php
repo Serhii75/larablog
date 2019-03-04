@@ -21,4 +21,11 @@ class UserCollection extends ResourceCollection
             'data' => $this->processCollection($request),
         ];
     }
+
+    public function some_func()
+    {
+        if (true) {
+            return [1, 2, 3];
+        }
+    }
 }

@@ -76,6 +76,11 @@ Route::group(['namespace' => 'Api'], function () {
         Route::group(['middleware' => 'auth:api'], function () {
             Route::patch('/{user}', 'UserController@update');
             Route::delete('/{user}', 'UserController@destroy');
+
+            Route::get('/{user}/followers', 'FollowUserController@followers');
+            Route::get('/{user}/follows', 'FollowUserController@follows');
+            Route::post('/{user}/follow', 'FollowUserController@follow');
+            Route::delete('/{user}/unfollow', 'FollowUserController@unfollow');
         });
     });
 });
