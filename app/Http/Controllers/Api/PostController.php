@@ -1,5 +1,8 @@
 <?php
 
+/** @noinspection PhpDocMissingThrowsInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
+
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
@@ -19,7 +22,7 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return PostCollection
      */
     public function index()
     {
@@ -32,8 +35,8 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\Post\StorePostRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  StorePostRequest  $request
+     * @return PostResource
      */
     public function store(StorePostRequest $request)
     {
@@ -53,22 +56,22 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Post $post
-     * @return \Illuminate\Http\Response
+     * @param  Post $post
+     * @return PostResource
      */
     public function show(Post $post)
     {
         $post->load('category', 'tags', 'user');
 
-        return (new PostResource($post));
+        return new PostResource($post);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\Post\UpdatePostRequest  $request
-     * @param  \App\Post $post
-     * @return \Illuminate\Http\Response
+     * @param  UpdatePostRequest  $request
+     * @param  Post $post
+     * @return PostResource
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
@@ -88,8 +91,8 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Post $post
-     * @return \Illuminate\Http\Response
+     * @param  Post $post
+     * @return Response
      */
     public function destroy(Post $post)
     {
@@ -104,7 +107,7 @@ class PostController extends Controller
      * Restore the specified resource from storage.
      *
      * @param  integer $id
-     * @return \Illuminate\Http\Response
+     * @return PostResource
      */
     public function restore($id)
     {
@@ -121,8 +124,8 @@ class PostController extends Controller
     /**
      * Hard delete the specified resource from storage.
      *
-     * @param  \App\Post $post
-     * @return \Illuminate\Http\Response
+     * @param  Post $post
+     * @return Response
      */
     public function forceDelete(Post $post)
     {

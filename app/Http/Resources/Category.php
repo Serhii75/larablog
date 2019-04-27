@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\Post as PostResource;
 use App\Traits\Resources\Filtratable;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -25,6 +24,7 @@ class Category extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'live' => $this->live,
+            'posts_count' => $this->posts_count,
             'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
             'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
         ]);

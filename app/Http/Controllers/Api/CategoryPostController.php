@@ -1,5 +1,8 @@
 <?php
 
+/** @noinspection PhpDocMissingThrowsInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
+
 namespace App\Http\Controllers\Api;
 
 use App\Category;
@@ -12,7 +15,7 @@ class CategoryPostController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return PostCollection
      */
     public function index(Category $category)
     {

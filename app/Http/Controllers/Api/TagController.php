@@ -1,5 +1,8 @@
 <?php
 
+/** @noinspection PhpDocMissingThrowsInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
+
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
@@ -19,7 +22,7 @@ class TagController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return TagCollection
      */
     public function index()
     {
@@ -29,8 +32,8 @@ class TagController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\Tag\StoreTagRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  StoreTagRequest  $request
+     * @return TagResource
      */
     public function store(StoreTagRequest $request)
     {
@@ -42,8 +45,8 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Tag $tag
-     * @return \Illuminate\Http\Response
+     * @param  Tag $tag
+     * @return TagResource
      */
     public function show(Tag $tag)
     {
@@ -55,9 +58,9 @@ class TagController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\Tag\UpdateTagRequest  $request
+     * @param  UpdateTagRequest  $request
      * @param  Tag $tag
-     * @return \Illuminate\Http\Response
+     * @return TagResource
      */
     public function update(UpdateTagRequest $request, Tag $tag)
     {
@@ -71,8 +74,8 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Tag $tag
-     * @return \Illuminate\Http\Response
+     * @param  Tag $tag
+     * @return Response
      */
     public function destroy(Tag $tag)
     {

@@ -1,14 +1,13 @@
 <?php
 
+/** @noinspection PhpDocMissingThrowsInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
+
 namespace App\Http\Controllers\Api;
 
 use App\Category;
-use App\Http\Requests\Api\Category\{
-    StoreCategoryRequest,
-    UpdateCategoryRequest
-};
+use App\Http\Requests\Api\Category\StoreCategoryRequest;
 use App\Http\Resources\Category as CategoryResource;
-use App\Http\Resources\User as UserResource;
 use App\Http\Resources\CategoryCollection;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,11 +17,11 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return CategoryCollection
      */
     public function index()
     {
-        $categories = Category::get();
+        $categories = Category::withCount('posts')->get();
 
         return new CategoryCollection($categories);
     }
@@ -30,8 +29,8 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\Category\StoreCategoryRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  StoreCategoryRequest  $request
+     * @return CategoryResource
      */
     public function store(StoreCategoryRequest $request)
     {
@@ -45,8 +44,8 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Category $category
-     * @return \Illuminate\Http\Response
+     * @param  Category $category
+     * @return CategoryResource
      */
     public function show(Category $category)
     {
@@ -56,9 +55,9 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category $category
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @param  Category $category
+     * @return CategoryResource
      */
     public function update(Request $request, Category $category)
     {
@@ -72,8 +71,8 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Category $category
-     * @return \Illuminate\Http\Response
+     * @param  Category $category
+     * @return Response
      */
     public function destroy(Category $category)
     {

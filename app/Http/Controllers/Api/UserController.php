@@ -1,5 +1,8 @@
 <?php
 
+/** @noinspection PhpDocMissingThrowsInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
+
 namespace App\Http\Controllers\Api;
 
 use App\User;
@@ -18,7 +21,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return UserCollection
      */
     public function index()
     {
@@ -30,8 +33,8 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\User $user
-     * @return \Illuminate\Http\Response
+     * @param  User $user
+     * @return UserResource
      */
     public function show(User $user)
     {
@@ -41,9 +44,9 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\User\UpdateUserRequest  $request
+     * @param  UpdateUserRequest  $request
      * @param  User $user
-     * @return \Illuminate\Http\Response
+     * @return UserResource
      */
     public function update(UpdateUserRequest $request, User $user)
     {
@@ -57,8 +60,8 @@ class UserController extends Controller
     /**
      * Get the current user
      *
-     * @param  \Illuminate\Http\Request $request [description]
-     * @return \Illuminate\Http\Response
+     * @param  Request $request
+     * @return UserResource
      */
     public function me(Request $request)
     {
@@ -68,8 +71,8 @@ class UserController extends Controller
     /**
      * Display a listing of the user posts.
      *
-     * @param  \App\User $user
-     * @return \Illuminate\Http\Response
+     * @param  User $user
+     * @return PostCollection
      */
     public function posts(User $user)
     {
@@ -83,8 +86,8 @@ class UserController extends Controller
     /**
      * Display a listing of the user comments.
      *
-     * @param  \App\User $user
-     * @return \Illuminate\Http\Response
+     * @param  User $user
+     * @return CommentCollection
      */
     public function comments(User $user)
     {
@@ -98,8 +101,8 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\User $user
-     * @return \Illuminate\Http\Response
+     * @param  User $user
+     * @return Response
      */
     public function destroy(User $user)
     {

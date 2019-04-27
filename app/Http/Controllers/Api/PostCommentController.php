@@ -1,5 +1,8 @@
 <?php
 
+/** @noinspection PhpDocMissingThrowsInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
+
 namespace App\Http\Controllers\Api;
 
 use App\{Comment, Post};
@@ -23,7 +26,7 @@ class PostCommentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \App\Http\Resources\CommentCollection
+     * @return CommentCollection
      */
     public function index(Post $post)
     {
@@ -37,8 +40,8 @@ class PostCommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\Comment\StoreCommentRequest  $request
-     * @return \App\Http\Resources\Comment
+     * @param  StoreCommentRequest  $request
+     * @return CommentResource
      */
     public function store(StoreCommentRequest $request, Post $post)
     {
@@ -47,18 +50,17 @@ class PostCommentController extends Controller
             ['user_id' => $request->user()->id]
         ));
 
-        // $post->user->notify(new PostCommented($post, $comment));
-
         return new CommentResource($comment);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\Comment\UpdateCommentRequest
-     * @param  \App\Post $post
-     * @param  \App\Comment $comment
-     * @return \App\Http\Resources\Comment
+     * @param  UpdateCommentRequest $request
+     * @param  Post $post
+     * @param  Comment $comment
+     *
+     * @return CommentResource
      */
     public function update(UpdateCommentRequest $request, Post $post, Comment $comment)
     {
@@ -74,7 +76,7 @@ class PostCommentController extends Controller
      *
      * @param  Post  $post
      * @param  Comment  $comment
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(Post $post, Comment $comment)
     {
